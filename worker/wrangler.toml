@@ -2,5 +2,8 @@ name = "serverless-proyecto"
 main = "src/index.js"
 compatibility_date = "2025-01-01"
 
+[secrets]
+required = ["SENDGRID_API_KEY"]
+
 [vars]
-FROM_EMAIL = "elcorremachitos.2015@gmail.com"
+FROM_EMAIL = "remitente-verificado@ejemplo.com"

@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "secrets": "wrangler secret bulk .dev.vars"
   },
   "devDependencies": {
-    "wrangler": "^3.80.0"
+    "wrangler": "^4.151.0"
   }
 }

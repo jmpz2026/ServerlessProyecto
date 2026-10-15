@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="1240" viewBox="0 0 780 1240" font-family="Segoe UI, Tahoma, Arial, sans-serif">
+  <defs>
+    <marker id="flecha" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+    <marker id="flechaRet" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="1240" fill="#ffffff"/>
+
+  <text x="390" y="52" text-anchor="middle" font-size="26" font-weight="700" fill="#0f172a">Flujo de envío de correo</text>
+  <text x="390" y="80" text-anchor="middle" font-size="14" fill="#64748b">Desde la página web hasta la bandeja del destinatario</text>
+
+  <rect x="60" y="140" width="460" height="96" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <rect x="60" y="140" width="8" height="96" rx="4" fill="#64748b"/>
+  <text x="92" y="182" font-size="19" font-weight="700" fill="#0f172a">Usuario</text>
+  <text x="92" y="210" font-size="14" fill="#475569">Escribe el correo destino</text>
+
+  <rect x="60" y="316" width="460" height="96" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <rect x="60" y="316" width="8" height="96" rx="4" fill="#2563eb"/>
+  <text x="92" y="358" font-size="19" font-weight="700" fill="#0f172a">Frontend</text>
+  <text x="92" y="386" font-size="14" fill="#475569">HTML + JavaScript  ·  Netlify</text>
+
+  <rect x="60" y="492" width="460" height="96" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <rect x="60" y="492" width="8" height="96" rx="4" fill="#16a34a"/>
+  <text x="92" y="534" font-size="19" font-weight="700" fill="#0f172a">Backend</text>
+  <text x="92" y="562" font-size="14" fill="#475569">Spring Boot 3 (Java 21)  ·  Render</text>
+
+  <rect x="60" y="668" width="460" height="96" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <rect x="60" y="668" width="8" height="96" rx="4" fill="#f59e0b"/>
+  <text x="92" y="710" font-size="19" font-weight="700" fill="#0f172a">Serverless</text>
+  <text x="92" y="738" font-size="14" fill="#475569">Cloudflare Worker  ·  JavaScript</text>
+
+  <rect x="60" y="844" width="460" height="96" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <rect x="60" y="844" width="8" height="96" rx="4" fill="#dc2626"/>
+  <text x="92" y="886" font-size="19" font-weight="700" fill="#0f172a">API de correo</text>
+  <text x="92" y="914" font-size="14" fill="#475569">SendGrid v3  ·  Mail Send</text>
+
+  <rect x="60" y="1020" width="460" height="96" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <rect x="60" y="1020" width="8" height="96" rx="4" fill="#7c3aed"/>
+  <text x="92" y="1062" font-size="19" font-weight="700" fill="#0f172a">Destinatario</text>
+  <text x="92" y="1090" font-size="14" fill="#475569">Recibe el correo en su bandeja</text>
+
+  <line x1="290" y1="236" x2="290" y2="306" stroke="#94a3b8" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="290" y1="412" x2="290" y2="482" stroke="#94a3b8" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="290" y1="588" x2="290" y2="658" stroke="#94a3b8" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="290" y1="764" x2="290" y2="834" stroke="#94a3b8" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="290" y1="940" x2="290" y2="1010" stroke="#94a3b8" stroke-width="2" marker-end="url(#flecha)"/>
+
+  <text x="312" y="281" font-size="13" fill="#334155">1  Escribes el correo y pulsas Enviar</text>
+  <text x="312" y="457" font-size="13" fill="#334155">2  POST /api/correo   { correo }</text>
+  <text x="312" y="633" font-size="13" fill="#334155">3  POST   { correo }</text>
+  <text x="312" y="809" font-size="13" fill="#334155">4  POST /v3/mail/send   (Bearer SG...)</text>
+  <text x="312" y="985" font-size="13" fill="#334155">5  SendGrid entrega el mensaje</text>
+
+  <path d="M 520,892 H 640 V 364 H 526" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#flechaRet)"/>
+  <text x="662" y="628" font-size="13" fill="#334155" text-anchor="middle" transform="rotate(90 662 628)">6  Respuesta   { exito, mensaje }</text>
+
+  <text x="390" y="1180" text-anchor="middle" font-size="13" fill="#94a3b8">Frontend  ·  Spring Boot  ·  Cloudflare Worker  ·  SendGrid</text>
+</svg>

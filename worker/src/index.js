@@ -10,6 +10,23 @@ function responder(datos, estado) {
   });
 }
 
+function revisarConfiguracion(env) {
+  if (!env.SENDGRID_API_KEY) {
+    const malNombre = Object.keys(env).find((nombre) => nombre.startsWith("SG."));
+    if (malNombre) {
+      return "La API key de SendGrid quedo como NOMBRE de variable. El nombre debe ser SENDGRID_API_KEY y la key va en el VALOR.";
+    }
+    return "Falta el secreto SENDGRID_API_KEY en el Worker.";
+  }
+  if (!env.SENDGRID_API_KEY.startsWith("SG.")) {
+    return "SENDGRID_API_KEY no parece una API key de SendGrid: debe empezar con SG.";
+  }
+  if (!env.FROM_EMAIL) {
+    return "Falta la variable FROM_EMAIL con el remitente verificado en SendGrid.";
+  }
+  return null;
+}
+
 export default {
   async fetch(request, env) {
     if (request.method !== "POST") {
@@ -28,8 +45,9 @@ export default {
       return responder({ exito: false, mensaje: "El correo es obligatorio" }, 400);
     }
 
-    if (!env.SENDGRID_API_KEY) {
-      return responder({ exito: false, mensaje: "Falta la API key de SendGrid" }, 500);
+    const problema = revisarConfiguracion(env);
+    if (problema) {
+      return responder({ exito: false, mensaje: problema }, 500);
     }
 
     const envio = {

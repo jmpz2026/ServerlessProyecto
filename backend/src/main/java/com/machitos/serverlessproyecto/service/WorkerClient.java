@@ -15,8 +15,17 @@ public class WorkerClient {
     private final String workerUrl;
 
     public WorkerClient(RestClient.Builder builder, @Value("${worker.url}") String workerUrl) {
+        if (workerUrl == null || workerUrl.isBlank()) {
+            throw new IllegalStateException(
+                    "worker.url esta vacia: configura WORKER_URL con la URL del Worker de Cloudflare");
+        }
+        String url = workerUrl.trim();
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            throw new IllegalStateException(
+                    "worker.url debe ser una URL absoluta, por ejemplo https://serverless-proyecto.<subdominio>.workers.dev");
+        }
+        this.workerUrl = url;
         this.restClient = builder.build();
-        this.workerUrl = workerUrl;
     }
 
     public CorreoResponse enviar(String correo) {
