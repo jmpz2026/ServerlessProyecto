@@ -1,0 +1,6 @@
+name = "serverless-proyecto"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+FROM_EMAIL = "elcorremachitos.2015@gmail.com"
