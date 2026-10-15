@@ -1,8 +1,4 @@
-const LOCAL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-
-const API_URL = LOCAL
-  ? "http://localhost:8080/api/correo"
-  : "https://tu-backend.onrender.com/api/correo";
+const API_URL = (window.CONFIG && window.CONFIG.apiUrl) || "http://localhost:8080/api/correo";
 
 const formulario = document.getElementById("formulario");
 const campoCorreo = document.getElementById("correo");
