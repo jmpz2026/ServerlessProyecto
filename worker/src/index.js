@@ -1,7 +1,11 @@
 const SENDGRID_URL = "https://api.sendgrid.com/v3/mail/send";
 
-const ASUNTO = "Mensaje desde la aplicacion";
-const CUERPO = "Este correo fue enviado desde el proyecto serverless.";
+const MAX_ASUNTO = 150;
+const MAX_MENSAJE = 5000;
+
+function texto(valor) {
+  return typeof valor === "string" ? valor.trim() : "";
+}
 
 function responder(datos, estado) {
   return new Response(JSON.stringify(datos), {
@@ -40,9 +44,25 @@ export default {
       return responder({ exito: false, mensaje: "Cuerpo JSON invalido" }, 400);
     }
 
-    const correo = datos && typeof datos.correo === "string" ? datos.correo.trim() : "";
+    const correo = texto(datos && datos.correo);
     if (correo === "") {
       return responder({ exito: false, mensaje: "El correo es obligatorio" }, 400);
+    }
+
+    const asunto = texto(datos.asunto).replace(/[\r\n]+/g, " ");
+    if (asunto === "") {
+      return responder({ exito: false, mensaje: "El asunto es obligatorio" }, 400);
+    }
+    if (asunto.length > MAX_ASUNTO) {
+      return responder({ exito: false, mensaje: "El asunto no puede superar " + MAX_ASUNTO + " caracteres" }, 400);
+    }
+
+    const cuerpo = texto(datos.mensaje);
+    if (cuerpo === "") {
+      return responder({ exito: false, mensaje: "El mensaje es obligatorio" }, 400);
+    }
+    if (cuerpo.length > MAX_MENSAJE) {
+      return responder({ exito: false, mensaje: "El mensaje no puede superar " + MAX_MENSAJE + " caracteres" }, 400);
     }
 
     const problema = revisarConfiguracion(env);
@@ -53,8 +73,8 @@ export default {
     const envio = {
       personalizations: [{ to: [{ email: correo }] }],
       from: { email: env.FROM_EMAIL },
-      subject: ASUNTO,
-      content: [{ type: "text/plain", value: CUERPO }]
+      subject: asunto,
+      content: [{ type: "text/plain", value: cuerpo }]
     };
 
     let respuesta;

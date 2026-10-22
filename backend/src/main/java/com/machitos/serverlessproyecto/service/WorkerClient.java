@@ -28,11 +28,11 @@ public class WorkerClient {
         this.restClient = builder.build();
     }
 
-    public CorreoResponse enviar(String correo) {
+    public CorreoResponse enviar(String correo, String asunto, String mensaje) {
         return restClient.post()
                 .uri(workerUrl)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Map.of("correo", correo))
+                .body(Map.of("correo", correo, "asunto", asunto, "mensaje", mensaje))
                 .exchange((request, response) -> {
                     CorreoResponse cuerpo = response.bodyTo(CorreoResponse.class);
                     if (cuerpo == null) {

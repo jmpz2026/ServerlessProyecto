@@ -26,7 +26,8 @@ public class CorreoController {
 
     @PostMapping
     public ResponseEntity<CorreoResponse> enviar(@Valid @RequestBody CorreoRequest request) {
-        CorreoResponse respuesta = workerClient.enviar(request.getCorreo());
+        CorreoResponse respuesta = workerClient.enviar(
+                request.getCorreo(), request.getAsunto(), request.getMensaje());
         if (respuesta.isExito()) {
             return ResponseEntity.ok(respuesta);
         }

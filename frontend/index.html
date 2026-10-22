@@ -18,11 +18,27 @@
       </div>
 
       <h1>Enviar correo</h1>
-      <p class="subtitulo">Escribe una direccion y te enviamos un correo de prueba al instante.</p>
+      <p class="subtitulo">Escribe el destinatario, el asunto y el mensaje, y lo enviamos al instante.</p>
 
       <form id="formulario" novalidate>
-        <label for="correo">Correo destino</label>
-        <input type="email" id="correo" name="correo" placeholder="nombre@ejemplo.com" autocomplete="email" required>
+        <div class="campo">
+          <label for="correo">Correo destino</label>
+          <input type="email" id="correo" name="correo" placeholder="nombre@ejemplo.com" autocomplete="email" required>
+        </div>
+
+        <div class="campo">
+          <label for="asunto">Asunto</label>
+          <input type="text" id="asunto" name="asunto" placeholder="Hola desde el proyecto" maxlength="150" required>
+        </div>
+
+        <div class="campo">
+          <div class="campo-cabecera">
+            <label for="cuerpo">Mensaje</label>
+            <span id="contador" class="contador" aria-hidden="true">0 / 5000</span>
+          </div>
+          <textarea id="cuerpo" name="mensaje" rows="6" placeholder="Escribe tu mensaje..." maxlength="5000" required></textarea>
+        </div>
+
         <button type="submit" id="boton">
           <span class="spinner" aria-hidden="true"></span>
           <span class="boton-texto">Enviar</span>

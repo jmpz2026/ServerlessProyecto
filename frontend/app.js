@@ -2,10 +2,19 @@ const API_URL = (window.CONFIG && window.CONFIG.apiUrl) || "http://localhost:808
 
 const formulario = document.getElementById("formulario");
 const campoCorreo = document.getElementById("correo");
+const campoAsunto = document.getElementById("asunto");
+const campoCuerpo = document.getElementById("cuerpo");
+const contador = document.getElementById("contador");
 const boton = document.getElementById("boton");
 const botonTexto = boton.querySelector(".boton-texto");
 const mensaje = document.getElementById("mensaje");
 const mensajeTexto = document.getElementById("mensaje-texto");
+
+const validaciones = [
+  { campo: campoCorreo, vacio: "El correo es obligatorio", invalido: "El correo no tiene un formato valido" },
+  { campo: campoAsunto, vacio: "El asunto es obligatorio" },
+  { campo: campoCuerpo, vacio: "El mensaje es obligatorio" }
+];
 
 function setCargando(cargando) {
   boton.disabled = cargando;
@@ -25,19 +34,37 @@ function ocultarMensaje() {
   mensajeTexto.textContent = "";
 }
 
-campoCorreo.addEventListener("input", () => {
-  campoCorreo.classList.remove("invalido");
-});
+function actualizarContador() {
+  contador.textContent = campoCuerpo.value.length + " / " + campoCuerpo.maxLength;
+}
+
+function validar() {
+  for (const { campo, vacio, invalido } of validaciones) {
+    const estaVacio = campo.value.trim() === "";
+    if (estaVacio || !campo.checkValidity()) {
+      campo.classList.add("invalido");
+      campo.focus();
+      return estaVacio ? vacio : invalido;
+    }
+  }
+  return null;
+}
+
+for (const { campo } of validaciones) {
+  campo.addEventListener("input", () => {
+    campo.classList.remove("invalido");
+  });
+}
+
+campoCuerpo.addEventListener("input", actualizarContador);
 
 formulario.addEventListener("submit", async (evento) => {
   evento.preventDefault();
   ocultarMensaje();
 
-  if (!campoCorreo.checkValidity()) {
-    campoCorreo.classList.add("invalido");
-    const vacio = campoCorreo.value.trim() === "";
-    mostrarMensaje(vacio ? "El correo es obligatorio" : "El correo no tiene un formato valido", false);
-    campoCorreo.focus();
+  const error = validar();
+  if (error) {
+    mostrarMensaje(error, false);
     return;
   }
 
@@ -46,7 +73,11 @@ formulario.addEventListener("submit", async (evento) => {
     const respuesta = await fetch(API_URL, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ correo: campoCorreo.value.trim() })
+      body: JSON.stringify({
+        correo: campoCorreo.value.trim(),
+        asunto: campoAsunto.value.trim(),
+        mensaje: campoCuerpo.value.trim()
+      })
     });
 
     let datos;
@@ -60,6 +91,7 @@ formulario.addEventListener("submit", async (evento) => {
     mostrarMensaje(datos.mensaje || "Respuesta sin mensaje", Boolean(datos.exito));
     if (datos.exito) {
       formulario.reset();
+      actualizarContador();
     }
   } catch (error) {
     mostrarMensaje("No se pudo conectar con el servidor", false);
@@ -67,3 +99,5 @@ formulario.addEventListener("submit", async (evento) => {
     setCargando(false);
   }
 });
+
+actualizarContador();
