@@ -2,8 +2,7 @@ name = "serverless-proyecto"
 main = "src/index.js"
 compatibility_date = "2025-01-01"
 
+# FROM_EMAIL y SENDGRID_API_KEY van como secretos (wrangler secret put ...).
+# No usar [vars]: wrangler deploy los sube y pisa lo configurado en el dashboard.
 [secrets]
-required = ["SENDGRID_API_KEY"]
-
-[vars]
-FROM_EMAIL = "remitente-verificado@ejemplo.com"
+required = ["SENDGRID_API_KEY", "FROM_EMAIL"]

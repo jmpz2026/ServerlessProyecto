@@ -96,8 +96,19 @@ export default {
     }
 
     const detalle = await respuesta.text();
+    let motivo = "";
+    try {
+      const errores = JSON.parse(detalle).errors;
+      motivo = errores && errores[0] && errores[0].message ? errores[0].message : "";
+    } catch (error) {
+      motivo = "";
+    }
     return responder(
-      { exito: false, mensaje: "SendGrid rechazo el envio", detalle: detalle },
+      {
+        exito: false,
+        mensaje: "SendGrid rechazo el envio (HTTP " + respuesta.status + ")" + (motivo ? ": " + motivo : ""),
+        detalle: detalle
+      },
       502
     );
   }
